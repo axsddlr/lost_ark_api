@@ -52,6 +52,17 @@ class LostA:
 
             except:
                 description = "No description"
+
+            # scrape each paragraph from url
+            r = requests.get(url, headers=headers)
+            soup = BeautifulSoup(r.content, 'lxml')
+
+            article = soup.find("article", {"class": "ags-NewsArticlePage-contentWrapper-articlePane-article"})
+
+            excerpt = []
+            for text in article.find_all("p", {"class": "ags-rich-text-p"}):
+                excerpt.append(text.select_one("span").text)
+
             api.append(
                 {
                     "title": title,
@@ -59,7 +70,7 @@ class LostA:
                     "thumbnail": thumbnail_url,
                     "url": url,
                     "publishDate": date,
-                    # "excerpt": remove_tags(summary_full),
+                    "excerpt": excerpt[2],
                 }
             )
         # #

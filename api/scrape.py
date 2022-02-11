@@ -28,7 +28,7 @@ class LostA:
 
             # url of articles
             url_parent = module.find("a")["href"]
-            url = f"https://www.playlostark.com/{url_parent}"
+            url = f"https://www.playlostark.com{url_parent}"
 
             # date of articles
             date = module.find(

@@ -1,0 +1,8 @@
+{
+    "apps": [{
+        "name": "lost_ark",
+        "script": "main.py",
+        "interpreter": "python3.8",
+        "interpreter_args": "-u"
+    }]
+}

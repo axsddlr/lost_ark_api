@@ -23,8 +23,6 @@ class LostA:
 
         api = []
         for module in la_module:
-            thumbnail = module.find("img")["src"]
-            thumbnail_url = f"https:{thumbnail}"
 
             # url of articles
             url_parent = module.find("a")["href"]
@@ -63,11 +61,16 @@ class LostA:
             for text in article.find_all("p", {"class": "ags-rich-text-p"}):
                 excerpt.append(text.select_one("span").text)
 
+            thumbnail = []
+            for thumb in article.find_all("div", {"class": "ags-MediaGalleryEmbed-container-gallery-box-thumbnail"}):
+                thumbnail.append(
+                    thumb.find("img", {"class": "ags-MediaGalleryEmbed-container-gallery-box-thumbnail-image"})["src"])
+
             api.append(
                 {
                     "title": title,
                     "description": description.split("\n")[0],
-                    "thumbnail": thumbnail_url,
+                    "thumbnail": "https:" + thumbnail[0],
                     "url": url,
                     "publishDate": date,
                     "excerpt": excerpt[2],

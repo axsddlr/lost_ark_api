@@ -1,3 +1,5 @@
+import time
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -44,7 +46,8 @@ class LostA:
                 description = module.find(
                     "div",
                     {
-                        "class": "ags-SlotModule-contentContainer-text ags-SlotModule-contentContainer-text--blog ags-SlotModule-contentContainer-text"
+                        "class": "ags-SlotModule-contentContainer-text ags-SlotModule-contentContainer-text--blog "
+                                 "ags-SlotModule-contentContainer-text "
                     },
                 ).text.strip()
 
@@ -83,6 +86,47 @@ class LostA:
             raise Exception("API response: {}".format(status))
         return data
 
+    @staticmethod
+    def get_status(monitored_servers):
+        """Checks whether a server is full or not. Default server to check is Una.
+        A specific server can be set in the function argument."""
+        True
+
+        url = "https://www.playlostark.com/en-us/support/server-status"
+        html = requests.get(url, headers=headers)
+        try:
+            soup = BeautifulSoup(html.content, "lxml")
+        except:
+            print("An error occurred. Trying again in 5 seconds")
+            time.sleep(5)
+
+        server_list = soup.find_all('div',
+                                    class_='ags-ServerStatus-content-responses-response-server')
+
+        new_status = {}
+
+        for server in server_list:
+            server_name = server.find('div',
+                                      class_='ags-ServerStatus-content-responses-response-server-name').text.strip()
+            if server_name in monitored_servers:
+                if server.find('div',
+                               class_='ags-ServerStatus-content-responses-response-server-status '
+                                      'ags-ServerStatus-content-responses-response-server-status--good'):
+                    new_status[server_name] = '✅'
+                if server.find('div',
+                               class_='ags-ServerStatus-content-responses-response-server-status '
+                                      'ags-ServerStatus-content-responses-response-server-status--busy'):
+                    new_status[server_name] = '❌'
+                if server.find('div',
+                               class_='ags-ServerStatus-content-responses-response-server-status '
+                                      'ags-ServerStatus-content-responses-response-server-status--maintenance'):
+                    new_status[server_name] = '🛠️'
+                if server.find('div',
+                               class_='ags-ServerStatus-content-responses-response-server-status '
+                                      'ags-ServerStatus-content-responses-response-server-status--full'):
+                    new_status[server_name] = '⚠️'
+        return new_status
+
 
 if __name__ == '__main__':
-    print(LostA.news())
+    print(LostA.news("updates"))

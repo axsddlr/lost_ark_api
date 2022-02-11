@@ -1,5 +1,6 @@
-from fastapi import FastAPI
 import uvicorn
+from fastapi import FastAPI
+
 from api.scrape import LostA
 from ratelimit import limits
 
@@ -28,6 +29,17 @@ def lost_ark_news(tag):
     events\n
     """
     return lost_ark.news(tag)
+
+
+@limits(calls=250, period=TWO_MINUTES)
+@app.get("/server/{monitored_servers}", tags=["Server Status"])
+def lost_ark_server_status(monitored_servers):
+    """
+    Enter Server Name\n
+    i.e: http://lostarkapi.herokuapp.com/server/Una\n
+    result: {'Una': '✅'}
+    """
+    return lost_ark.get_status(monitored_servers)
 
 
 if __name__ == "__main__":

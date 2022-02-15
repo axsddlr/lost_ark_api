@@ -159,19 +159,19 @@ class LostA:
             if server.find('div',
                            class_='ags-ServerStatus-content-responses-response-server-status '
                                   'ags-ServerStatus-content-responses-response-server-status--good'):
-                new_status[server_name] = '✅'
+                new_status[server_name] = '✔️ Ok'
             if server.find('div',
                            class_='ags-ServerStatus-content-responses-response-server-status '
                                   'ags-ServerStatus-content-responses-response-server-status--busy'):
-                new_status[server_name] = '❌'
+                new_status[server_name] = '❌ Busy'
             if server.find('div',
                            class_='ags-ServerStatus-content-responses-response-server-status '
                                   'ags-ServerStatus-content-responses-response-server-status--maintenance'):
-                new_status[server_name] = '🛠️'
+                new_status[server_name] = '🛠️ Maintenance ️'
             if server.find('div',
                            class_='ags-ServerStatus-content-responses-response-server-status '
                                   'ags-ServerStatus-content-responses-response-server-status--full'):
-                new_status[server_name] = '⚠️'
+                new_status[server_name] = '⚠️ Full'
 
         data = {"status": status, "data": new_status}
 

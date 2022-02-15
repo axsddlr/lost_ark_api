@@ -2,6 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 
 from api.scrape import LostA
+from api.scrape_server import LostA_servers
 from ratelimit import limits
 
 app = FastAPI(
@@ -16,6 +17,7 @@ app = FastAPI(
 
 # init classes
 lost_ark = LostA()
+la_servers = LostA_servers()
 
 TWO_MINUTES = 150
 
@@ -34,7 +36,7 @@ def lost_ark_news(tag):
 @limits(calls=250, period=TWO_MINUTES)
 @app.get("/server/all", tags=["Server Status"])
 def lost_ark_all_server_status():
-    return lost_ark.get_server_list_status()
+    return la_servers.get_server_list_status()
 
 
 @limits(calls=250, period=TWO_MINUTES)
@@ -45,7 +47,7 @@ def lost_ark_server_status(monitored_servers):
     i.e: http://lostarkapi.herokuapp.com/server/Una\n
     result: {"status": 200,"data": {"Una": "✔️ Ok"}}
     """
-    return lost_ark.get_server_status(monitored_servers)
+    return la_servers.get_server_status(monitored_servers)
 
 
 if __name__ == "__main__":

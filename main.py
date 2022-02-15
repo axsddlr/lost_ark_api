@@ -41,9 +41,9 @@ def lost_ark_all_server_status():
 @app.get("/server/{monitored_servers}", tags=["Server Status"])
 def lost_ark_server_status(monitored_servers):
     """
-    Enter Server Name\n
+    Enter Server Name (Case sensitive)\n
     i.e: http://lostarkapi.herokuapp.com/server/Una\n
-    result: {'Una': '✅'}
+    result: {"status": 200,"data": {"Una": "✔️ Ok"}}
     """
     return lost_ark.get_server_status(monitored_servers)
 

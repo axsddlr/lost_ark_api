@@ -32,7 +32,7 @@ def lost_ark_news(tag):
 
 
 @limits(calls=250, period=TWO_MINUTES)
-@app.get("/server/all}", tags=["Server Status"])
+@app.get("/server/all", tags=["Server Status"])
 def lost_ark_all_server_status():
     return lost_ark.get_server_list_status()
 

@@ -46,8 +46,7 @@ class LostA:
                 description = module.find(
                     "div",
                     {
-                        "class": "ags-SlotModule-contentContainer-text ags-SlotModule-contentContainer-text--blog "
-                                 "ags-SlotModule-contentContainer-text "
+                        "class": "ags-SlotModule-contentContainer-text ags-SlotModule-contentContainer-text--blog ags-SlotModule-contentContainer-text"
                     },
                 ).text.strip()
 

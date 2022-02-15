@@ -78,7 +78,6 @@ class LostA:
                     "excerpt": excerpt[2],
                 }
             )
-        # #
         data = {"status": status, "data": api}
 
         if status != 200:
@@ -95,6 +94,8 @@ class LostA:
         html = requests.get(url, headers=headers)
         try:
             soup = BeautifulSoup(html.content, "lxml")
+            status = html.status_code
+
         except:
             print("An error occurred. Trying again in 5 seconds")
             time.sleep(5)
@@ -124,7 +125,13 @@ class LostA:
                                class_='ags-ServerStatus-content-responses-response-server-status '
                                       'ags-ServerStatus-content-responses-response-server-status--full'):
                     new_status[server_name] = '⚠️'
-        return new_status
+
+        data = {"status": status, "data": new_status}
+
+        if status != 200:
+            raise Exception("API response: {}".format(status))
+        return data
+        # return new_status
 
 
 if __name__ == '__main__':

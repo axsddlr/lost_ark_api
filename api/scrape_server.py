@@ -36,7 +36,7 @@ class LostA_servers:
                 if server.find('div',
                                class_='ags-ServerStatus-content-responses-response-server-status '
                                       'ags-ServerStatus-content-responses-response-server-status--good'):
-                    new_status[server_name] = '✔️ Ok'
+                    new_status[server_name] = '✅ Ok'
                 if server.find('div',
                                class_='ags-ServerStatus-content-responses-response-server-status '
                                       'ags-ServerStatus-content-responses-response-server-status--busy'):

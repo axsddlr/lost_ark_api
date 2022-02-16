@@ -34,6 +34,15 @@ def lost_ark_news(tag):
 
 
 @limits(calls=250, period=TWO_MINUTES)
+@app.get("/forums", tags=["News"])
+def lost_ark_forums():
+    """
+    News and Updates via official news section of forums
+    """
+    return lost_ark.la_forums()
+
+
+@limits(calls=250, period=TWO_MINUTES)
 @app.get("/server/all", tags=["Server Status"])
 def lost_ark_all_server_status():
     return la_servers.get_server_list_status()

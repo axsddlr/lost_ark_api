@@ -91,7 +91,7 @@ class LostA_servers:
             if server.find('div',
                            class_='ags-ServerStatus-content-responses-response-server-status '
                                   'ags-ServerStatus-content-responses-response-server-status--maintenance'):
-                new_status[server_name] = '🛠️ Maintenance ️'
+                new_status[server_name] = '🛠️ Maintenance'
             if server.find('div',
                            class_='ags-ServerStatus-content-responses-response-server-status '
                                   'ags-ServerStatus-content-responses-response-server-status--full'):

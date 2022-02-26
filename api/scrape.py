@@ -92,7 +92,7 @@ class LostA:
         return data
 
     @staticmethod
-    def la_forums():
+    def la_forums_v1():
         apiResponse = get_la_forums()
         base = apiResponse["topic_list"]["topics"]
 
@@ -130,6 +130,60 @@ class LostA:
             if not pinned and staff:
                 # if title.__contains__("Downtime"):
                 api.append(
+                    {
+                        "title": title,
+                        "post_body": post_content,
+                        "created_at": created_at,
+                        "url": url,
+                        "author": author,
+                    }
+                )
+
+        data = {"status": status, "data": api}
+
+        if status != 200:
+            raise Exception("API response: {}".format(status))
+        return data
+
+    @staticmethod
+    def la_forums_v2(category):
+        apiResponse = get_la_forums()
+        base = apiResponse["topic_list"]["topics"]
+
+        api = []
+        for each in base:
+            post_id = each["id"]
+
+            URL = f"https://forums.playlostark.com/t/{post_id}.json"
+            response = requests.get(URL)
+            responseJSON = response.json()
+            status = response.status_code
+
+            title = responseJSON["title"]
+            created_at = responseJSON["created_at"]
+            # post contents
+            post_content = responseJSON["post_stream"]["posts"][0]["cooked"]
+            # remove html tags from post content json string
+            post_content = re.sub(r"<.*?>", "", post_content)
+            # remove new lines from post content
+            post_content = re.sub(r"\n", " ", post_content)
+            # remove extra spaces from post content
+            post_content = re.sub(r"\s{2,}", " ", post_content)
+
+            # check if post is pinned
+            pinned = responseJSON["pinned"]
+            staff = responseJSON["post_stream"]["posts"][0]["staff"]
+
+            # author of post
+            author = responseJSON["post_stream"]["posts"][0]["username"]
+
+            # url to post
+            slug = responseJSON["slug"]
+            url = f"https://forums.playlostark.com/t/{slug}/{post_id}"
+
+            if not pinned and staff:
+                if title.__contains__(f"{category}"):
+                    api.append(
                     {
                         "title": title,
                         "post_body": post_content,

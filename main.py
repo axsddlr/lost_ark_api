@@ -34,12 +34,23 @@ def lost_ark_news(tag):
 
 
 @limits(calls=250, period=TWO_MINUTES)
-@app.get("/forums", tags=["News"])
+@app.get("/v1/forums", tags=["News"])
 def lost_ark_forums():
     """
     News and Updates via official news section of forums
     """
-    return lost_ark.la_forums()
+    return lost_ark.la_forums_v1()
+
+
+@limits(calls=250, period=TWO_MINUTES)
+@app.get("/v2/forums/{category}", tags=["News"])
+def lost_ark_forums(category):
+    """
+    [categories]\n
+    Maintenance\n
+    Downtime
+    """
+    return lost_ark.la_forums_v2(category)
 
 
 @limits(calls=250, period=TWO_MINUTES)

@@ -125,7 +125,7 @@ class LostA:
 
             # url to post
             slug = responseJSON["slug"]
-            url = f"https://forums.newworld.com/t/{slug}/{post_id}"
+            url = f"https://forums.playlostark.com/t/{slug}/{post_id}"
 
             if not pinned and staff:
                 # if title.__contains__("Downtime"):

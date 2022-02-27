@@ -1,5 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from api.scrape import LostA
 from api.scrape_server import LostA_servers
@@ -13,6 +14,16 @@ app = FastAPI(
     version="1.0.0",
     docs_url="/",
     redoc_url=None,
+)
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # init classes

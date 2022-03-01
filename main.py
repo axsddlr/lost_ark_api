@@ -11,7 +11,7 @@ app = FastAPI(
     description="An Unofficial REST API for [Lost Ark](https://www.playlostark.com/en-us/news), Made by [Andre "
                 "Saddler]( "
                 "https://github.com/axsddlr)",
-    version="1.0.0",
+    version="1.0.2",
     docs_url="/",
     redoc_url=None,
 )
@@ -62,6 +62,12 @@ def lost_ark_forums(category):
     Downtime
     """
     return lost_ark.la_forums_v2(category)
+
+
+@limits(calls=250, period=TWO_MINUTES)
+@app.get("/steam/playercount", tags=["Server Status"])
+def steam_playercount():
+    return lost_ark.la_playercount()
 
 
 @limits(calls=250, period=TWO_MINUTES)

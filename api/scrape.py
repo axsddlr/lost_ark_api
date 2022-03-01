@@ -1,5 +1,6 @@
-import requests
 import re
+
+import requests
 from bs4 import BeautifulSoup
 
 from utils.utils import headers
@@ -85,6 +86,25 @@ class LostA:
                     "excerpt": excerpt[2],
                 }
             )
+        data = {"status": status, "data": api}
+
+        if status != 200:
+            raise Exception("API response: {}".format(status))
+        return data
+
+    @staticmethod
+    def la_playercount():
+        url = (
+            "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=1599340"
+        )
+        response = requests.get(url, headers=headers)
+        obj = response.json()
+        status = response.status_code
+
+        player_count = obj["response"]["player_count"]
+        api = {
+            "player_count": player_count
+        }
         data = {"status": status, "data": api}
 
         if status != 200:
@@ -184,20 +204,21 @@ class LostA:
             if not pinned and staff:
                 if title.__contains__(f"{category}"):
                     api.append(
-                    {
-                        "title": title,
-                        "post_body": post_content,
-                        "created_at": created_at,
-                        "url": url,
-                        "author": author,
-                    }
-                )
+                        {
+                            "title": title,
+                            "post_body": post_content,
+                            "created_at": created_at,
+                            "url": url,
+                            "author": author,
+                        }
+                    )
 
         data = {"status": status, "data": api}
 
         if status != 200:
             raise Exception("API response: {}".format(status))
         return data
+
 
 if __name__ == '__main__':
     print(LostA.news("updates"))

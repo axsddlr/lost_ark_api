@@ -40,6 +40,8 @@ def lost_ark_news(tag):
 
     updates \n
     events\n
+    release-notes\n
+    general\n
     """
     return lost_ark.news(tag)
 

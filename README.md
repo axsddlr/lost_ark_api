@@ -14,6 +14,7 @@ This REST API provides you with some useful tools such as:
 
 # Requirements
 You are required to have Python3 and pip installed.
+
 If you wish to run this process in docker, you are required to download [Docker](https://www.docker.com/).
 - Docker for Windows / Mac: [Download Page](https://www.docker.com/get-started)
 - Linux
@@ -34,12 +35,15 @@ The following modules represent the minimum version required to run this REST AP
 
 When installing the above modules in pip, you can run a command similar to this:
 `pip install [Module]==[Version]`
+
 Example: `pip install requests==2.27.1`
+
 Or you can download the latest version by simply `pip install requests`
 
 # Execution
 
 When everything above is installed correctly, you can simply run the `main.py` application.
+
 Please follow the [**Docker Guide**](https://docs.docker.com/get-docker/) on how to set up your Docker environment.
 
 # Maintainers

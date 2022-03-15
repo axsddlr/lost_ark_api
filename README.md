@@ -4,6 +4,7 @@
 
 An Unofficial REST API for [LOST ARK](https://www.playlostark.com/en-us/news)
 You can run the REST API on a service like [Heroku](http://lostarkapi.herokuapp.com/) or on your local machine.
+
 [![Deploy To Heroku](https://camo.githubusercontent.com/c0824806f5221ebb7d25e559568582dd39dd1170/68747470733a2f2f7777772e6865726f6b7563646e2e636f6d2f6465706c6f792f627574746f6e2e706e67)](https://heroku.com/deploy)
 
 # Features

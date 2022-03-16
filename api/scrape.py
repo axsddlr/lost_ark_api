@@ -1,16 +1,15 @@
 import re
 
-import requests
-from bs4 import BeautifulSoup
+import httpx
 
-from utils.utils import headers
+from utils.utils import headers, get_soup, get_status
 
 
 def get_la_forums():
     url = (
         "https://forums.playlostark.com/c/official-news/22/l/latest.json?ascending=false"
     )
-    response = requests.get(url, headers=headers)
+    response = httpx.get(url, headers=headers)
     return response.json()
 
 
@@ -18,12 +17,10 @@ class LostA:
     @staticmethod
     def news(tag):
         URL = f"https://www.playlostark.com/en-us/news?tag={tag}"
+        status = get_status(URL)
+        response = get_soup(URL)
 
-        r = requests.get(URL, headers=headers)
-        soup = BeautifulSoup(r.content, "lxml")
-        status = r.status_code
-
-        la_base = soup.find(id="ags-NewsLandingPage-renderBlogList")
+        la_base = response.find(id="ags-NewsLandingPage-renderBlogList")
         la_module = la_base.find_all(
             "div",
             {
@@ -62,10 +59,9 @@ class LostA:
                 description = "No description"
 
             # scrape each paragraph from url
-            r = requests.get(url, headers=headers)
-            soup = BeautifulSoup(r.content, 'lxml')
+            r = get_soup(url)
 
-            article = soup.find("article", {"class": "ags-NewsArticlePage-contentWrapper-articlePane-article"})
+            article = r.find("article", {"class": "ags-NewsArticlePage-contentWrapper-articlePane-article"})
 
             excerpt = []
             for text in article.find_all("p", {"class": "ags-rich-text-p"}):
@@ -88,8 +84,6 @@ class LostA:
             )
         data = {"status": status, "data": api}
 
-        if status != 200:
-            raise Exception("API response: {}".format(status))
         return data
 
     @staticmethod
@@ -97,7 +91,7 @@ class LostA:
         url = (
             "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=1599340"
         )
-        response = requests.get(url, headers=headers)
+        response = httpx.get(url, headers=headers)
         obj = response.json()
         status = response.status_code
 
@@ -121,7 +115,7 @@ class LostA:
             post_id = each["id"]
 
             URL = f"https://forums.playlostark.com/t/{post_id}.json"
-            response = requests.get(URL)
+            response = httpx.get(URL)
             responseJSON = response.json()
             status = response.status_code
 
@@ -175,7 +169,7 @@ class LostA:
             post_id = each["id"]
 
             URL = f"https://forums.playlostark.com/t/{post_id}.json"
-            response = requests.get(URL)
+            response = httpx.get(URL)
             responseJSON = response.json()
             status = response.status_code
 

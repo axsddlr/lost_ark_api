@@ -1,9 +1,6 @@
 import time
 
-import requests
-from bs4 import BeautifulSoup
-
-from utils.utils import headers
+from utils.utils import get_status, get_soup
 
 
 class LostA_servers:
@@ -15,17 +12,16 @@ class LostA_servers:
         True
 
         url = "https://www.playlostark.com/en-us/support/server-status"
-        html = requests.get(url, headers=headers)
         try:
-            soup = BeautifulSoup(html.content, "lxml")
-            status = html.status_code
+            status = get_status(url)
+            res = get_soup(url)
 
         except:
             print("An error occurred. Trying again in 5 seconds")
             time.sleep(5)
 
-        server_list = soup.find_all('div',
-                                    class_='ags-ServerStatus-content-responses-response-server')
+        server_list = res.find_all('div',
+                                   class_='ags-ServerStatus-content-responses-response-server')
 
         new_status = {}
 
@@ -63,17 +59,16 @@ class LostA_servers:
         True
 
         url = "https://www.playlostark.com/en-us/support/server-status"
-        html = requests.get(url, headers=headers)
         try:
-            soup = BeautifulSoup(html.content, "lxml")
-            status = html.status_code
+            status = get_status(url)
+            res = get_soup(url)
 
         except:
             print("An error occurred. Trying again in 5 seconds")
             time.sleep(5)
 
-        server_list = soup.find_all('div',
-                                    class_='ags-ServerStatus-content-responses-response-server')
+        server_list = res.find_all('div',
+                                   class_='ags-ServerStatus-content-responses-response-server')
 
         new_status = {}
 

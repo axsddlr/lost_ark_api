@@ -7,7 +7,7 @@ from utils.utils import headers, get_soup, get_status
 
 def get_la_forums():
     url = (
-        "https://forums.playlostark.com/c/official-news/22/l/latest.json?ascending=false"
+        "https://forums.playlostark.com/c/official-news/official-news/53/l/latest.json?ascending=false"
     )
     response = httpx.get(url, headers=headers)
     return response.json()

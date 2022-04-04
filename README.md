@@ -16,6 +16,7 @@ This REST API provides you with some useful tools such as:
 
 [http://lostarkapi.herokuapp.com/](http://lostarkapi.herokuapp.com/)
 
+[https://lastarkapi-m2.herokuapp.com/](https://lastarkapi-m2.herokuapp.com/)
 &nbsp;
 &nbsp;
 
